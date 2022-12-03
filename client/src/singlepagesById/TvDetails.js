@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import FavButton from './../components/FavButton';
+import WatchButton from './../components/WatchButton';
 const TvDetails = () => {
   const [tvShow, setTvShow] = useState(null);
   const { id } = useParams();
@@ -34,13 +36,14 @@ const TvDetails = () => {
           <StyledPoster src={tvShow.image} />
           <h3>Rated: {tvShow.contentRating}</h3>
           <div>
-            <button>Add</button>
-            <button>Remove</button>
+            <h2>{tvShow.companyList[0].name}</h2>
+            <FavButton media={tvShow} />
+            <WatchButton media={tvShow} />
           </div>
           <div>
             <h2>{tvShow.imDbRating}</h2>
             <p>{tvShow.plot}</p>
-            <h2>{tvShow.companyList[0].name}</h2>
+
             <p>Release Date: {tvShow.releaseDate}</p>
             <p>Show Creators: {tvShow.creators}</p>
             <p>Genres: {tvShow.genres}</p>

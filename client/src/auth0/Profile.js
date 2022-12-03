@@ -21,18 +21,30 @@ const Profile = () => {
 
 export default Profile;
 const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-size: 20px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* font-size: 20px; */
+  width: 80px;
+  margin-top: 15px;
 `;
 const StyledPic = styled.img`
   border-radius: 50%;
-  width: 25px;
-  display: flex;
+  border-color: ;
+
+  width: 45px;
+  /* display: flex; */
   /* border: 2px solid blue; */
-  margin: 5px;
+  margin: auto;
+  margin-left: 8px;
 `;
 const StyledH2 = styled.h2`
-  font-size: 10px;
-  color: white;
+  font-size: 15px;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  font-family: 'Sacramento', cursive;
+  text-align: center;
+  animation: blink 12s infinite;
+  -webkit-animation: blink 12s infinite;
+  margin-left: 10px;
 `;

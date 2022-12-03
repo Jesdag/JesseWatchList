@@ -5,7 +5,6 @@ import SideBar from './components/SideBar';
 import MoviePage from './components/MoviePage';
 import HomePage from './components/HomePage';
 import TvShowPage from './components/TvShowPage';
-import Account from './components/Account';
 import Favorites from './components/Favorites';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useContext } from 'react';
@@ -17,6 +16,7 @@ import Top250Moives from './components/Top250Movies';
 import Top250Tv from './components/Top250Tv';
 import GamePage from './components/GamePage';
 import SearchBar from './components/SearchBar';
+import MyWatchList from './components/MyWatchlist';
 // import NewSearchBar from './components/NewSearchBar';
 const App = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -68,11 +68,11 @@ const App = () => {
               <Route path='/games/:id' element={<GameDetails />} />
               <Route path='/movies/:id' element={<MovieDetails />} />
               <Route path='/tv/:id' element={<TvDetails />} />
-              <Route path='/account' element={<Account />} />
               <Route path='/favorites' element={<Favorites />} />
               <Route path='/top250Movies' element={<Top250Moives />} />
               <Route path='/top250Tv' element={<Top250Tv />} />
-            </Routes>{' '}
+              <Route path='/myWatchList' element={<MyWatchList />} />
+            </Routes>
           </StyledDiv>
         </StyledColor>
       </Wapper>
@@ -81,9 +81,9 @@ const App = () => {
 };
 
 const Wapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  /* display: flex; */
+  /* flex-direction: row; */
+  /* flex-wrap: wrap; */
 `;
 const StyledDiv = styled.div`
   display: flex;

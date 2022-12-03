@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import FavButton from './../components/FavButton';
+import WatchButton from './../components/WatchButton';
+import GameSearchBar from './../components/GameSearchBar';
 const GameDetails = () => {
   const [games, setGames] = useState(null);
   const [gameTrailers, setGameTrailers] = useState(null);
@@ -20,6 +23,7 @@ const GameDetails = () => {
   console.log(games);
   return (
     <>
+      <GameSearchBar />
       {!games ? (
         <div>
           <img
@@ -31,8 +35,8 @@ const GameDetails = () => {
       ) : (
         <div>
           <h1>{games.name}</h1>
-          <button>Add</button>
-          <button>Remove</button>
+          <FavButton media={games} />
+          <WatchButton media={games} />
 
           <img src={games.background_image} />
           <p>{games.description_raw}</p>

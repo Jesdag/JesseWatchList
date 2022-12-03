@@ -1,14 +1,16 @@
 // import styled from 'styled-components';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import FavButton from './FavButton';
 import WatchButton from './WatchButton';
+import { UserContext } from './../context/UserContext';
+
 const Homepage = () => {
   const [inTheaters, setInTheaters] = useState(null);
   const [mostPopularTvShows, setMostPopularTvShows] = useState(null);
   const [games, setGames] = useState(null);
-  // const { addMovieToWatchList, watchlist } = useContext(WatchContext);
+  const { userData } = useContext(UserContext);
 
   //// Fetch To Api For Movies in Theaters
   const fetchHandler = async (string, callback) => {
@@ -44,8 +46,12 @@ const Homepage = () => {
                 </NavLink>
                 <div>{movie.fullTitle}</div>
                 <div>{movie.imDbRating}</div>
-                <FavButton media={movie} />
-                <WatchButton media={movie} />
+                {userData && (
+                  <>
+                    <FavButton media={movie} />
+                    <WatchButton media={movie} />
+                  </>
+                )}
               </div>
             );
           })}

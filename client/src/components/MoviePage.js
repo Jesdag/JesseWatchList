@@ -8,35 +8,7 @@ const MoviePage = () => {
   const [topBoxOffice, setBoxOffice] = useState(null);
   const [mostPopMovies, setMostPopMovies] = useState(null);
 
-  ///////Fetch to Api for Movies Coming Soon
-  // useEffect(() => {
-  //   fetch('/api/comingSoon')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setMComingSoon(data);
-  //       console.log(data);
-  //     });
-  // }, []);
-
-  ///////Fetch to Api for Most Pop Movies
-
-  useEffect(() => {
-    fetch('/api/MostPopularMovie')
-      .then((res) => res.json())
-      .then((data) => {
-        setMostPopMovies(data);
-        console.log(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    fetch('/api/topBoxOfficeAllTime')
-      .then((res) => res.json())
-      .then((data) => {
-        setBoxOffice(data);
-        console.log(data);
-      });
-  }, []);
+  ///////Fetch to Api for Movies
 
   const fetchHandler = async (string, callback) => {
     const res = await fetch(string);

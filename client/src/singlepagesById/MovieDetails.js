@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { UserContext } from './../context/UserContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import FavButton from '../components/FavButton';
+import WatchButton from '../components/WatchButton';
+// import styled, { keyframes } from 'styled-components';
+
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -59,18 +62,25 @@ const MovieDetails = () => {
         </div>
       ) : (
         <div>
-          <h1>{movie.title}</h1>
+          <StyledMovieTitle>
+            <h1>{movie.title}</h1>
+          </StyledMovieTitle>
           <h3>Rated:{movie.contentRating}</h3>
-
           <StyledPoster src={movie.image} />
 
           <div>
-            <div>
+            <StyledBtn>
               <FavButton media={movie} />
-            </div>
+              <WatchButton media={movie} />
+            </StyledBtn>
             <div>
-              <h2>Score: {movie.imDbRating}</h2>
-              <p>{movie.plot}</p>
+              <h2>
+                Score: <StyledRating>{movie.imDbRating}</StyledRating>
+              </h2>
+              <div>
+                <h2>Plot:</h2>
+                {movie.plot}
+              </div>
               <h2>{movie.companyList.name}</h2>
               <p>Release Date: {movie.releaseDate}</p>
               <p>Duration: {movie.runtimeStr}</p>
@@ -105,22 +115,56 @@ const MovieDetails = () => {
   );
 };
 export default MovieDetails;
+
 const Wrapper = styled.div`
-  text-decoration: none;
-`;
-const StyledActorContainer = styled.div`
+  border: 3px solid green;
   display: flex;
+  margin: auto;
+  text-align: center;
+`;
+const StyledBtn = styled.div`
+  display: flex;
+  border: 2px solid blue;
+  justify-content: center;
+  justify-content: space-evenly;
+  padding-top: 8px;
+`;
+const StyledMovieTitle = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const StyledActorContainer = styled.div`
   text-decoration: none;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
 `;
 const StyledActorPics = styled.img`
   width: 150px;
 `;
 const StyledPoster = styled.img`
   /* width: 175px; */
-  height: 550px;
+  height: 45rem;
   gap: 10px;
   border-radius: 5px;
 `;
 const StyledButton = styled.button`
   background-color: ${(props) => (props.toggled ? 'yellow' : 'red')};
+`;
+const StyledRating = styled.span`
+  font-size: 80px;
+  color: #fff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073,
+        0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+    }
+    to {
+      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
+        0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+    }
+  }
 `;
