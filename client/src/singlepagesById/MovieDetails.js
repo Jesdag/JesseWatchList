@@ -6,23 +6,30 @@ import { useAuth0 } from '@auth0/auth0-react';
 import FavButton from '../components/FavButton';
 import WatchButton from '../components/WatchButton';
 // import styled, { keyframes } from 'styled-components';
+import DynamicSwiper from '../swiper/DynamicSwiper';
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { user, isAuthenticated, isLoading } = useAuth0();
-
+  const [actorsInfo, setActorsInfo] = useState(null);
   const { userData, setFavIds, favIds } = useContext(UserContext);
   const { id } = useParams();
-  console.log(userData);
+  // console.log(userData);
 
   const fetchHandler = async (string, callback) => {
     const res = await fetch(string);
     const json = await res.json();
     callback(json);
+    const swiperArray = json.actorList.map((item) => {
+      console.log(item);
+      return { title: item.title, image: item.image };
+    });
+    console.log(swiperArray);
+    setActorsInfo(swiperArray);
   };
   useEffect(() => {
     fetchHandler(
-      `https://imdb-api.com/en/API/Title/k_44cr6yag/${id}`,
+      `https://imdb-api.com/en/API/Title/${process.env.REACT_APP_IMDB}/${id}`,
       setMovie
     );
   }, [id]);
@@ -66,8 +73,52 @@ const MovieDetails = () => {
             <h1>{movie.title}</h1>
           </StyledMovieTitle>
           <h3>Rated:{movie.contentRating}</h3>
-          <StyledPoster src={movie.image} />
-
+          <StyledCard>
+            <StyledPoster src={movie.image} />
+            <div>
+              <StyledFinish>
+                <StyledPlot>
+                  <h2>Plot</h2>
+                  <StyledSpan> {movie.plot}</StyledSpan>
+                </StyledPlot>
+                <div>
+                  Genres: <StyledSpan>{movie.genres}</StyledSpan>
+                </div>
+                <div>
+                  Duration: <StyledSpan>{movie.runtimeStr}</StyledSpan>
+                </div>
+                <div>
+                  <div>Directors: {movie.directors}</div>
+                  <div>
+                    Writen By: <StyledSpan>{movie.writers}</StyledSpan>
+                  </div>
+                </div>{' '}
+                <div>
+                  <h3>BoxOffice Gross Worldwide:</h3>
+                  <div>
+                    Onpening Weekend{' '}
+                    <StyledSpan>
+                      {movie.boxOffice.openingWeekendUSA} $
+                    </StyledSpan>
+                  </div>
+                  <div>
+                    Worldwide:{' '}
+                    <StyledSpan>
+                      {movie.boxOffice.cumulativeWorldwideGross} $
+                    </StyledSpan>
+                  </div>{' '}
+                  <StyledInfo>
+                    <div>
+                      <h4>
+                        Release Date{' '}
+                        <StyledSpan>{movie.releaseDate}</StyledSpan>
+                      </h4>
+                    </div>
+                  </StyledInfo>
+                </div>
+              </StyledFinish>
+            </div>
+          </StyledCard>
           <div>
             <StyledBtn>
               <FavButton media={movie} />
@@ -77,36 +128,17 @@ const MovieDetails = () => {
               <h2>
                 Score: <StyledRating>{movie.imDbRating}</StyledRating>
               </h2>
-              <div>
-                <h2>Plot:</h2>
-                {movie.plot}
-              </div>
+
               <h2>{movie.companyList.name}</h2>
-              <p>Release Date: {movie.releaseDate}</p>
-              <p>Duration: {movie.runtimeStr}</p>
-              <p>{movie.Rating}</p>
-              <p>Directors: {movie.directors}</p>
-              <p>Writen By: {movie.writers}</p>
-              <p>Genres: {movie.genres}</p>
+
+              <div>{movie.Rating}</div>
             </div>
           </div>
 
           <div>
-            <h3>BoxOffice Gross Worldwide:</h3>
-            <div>Onpening Weekend {movie.boxOffice.openingWeekendUSA} $</div>
-            <div>Worldwide: {movie.boxOffice.cumulativeWorldwideGross} $</div>
-          </div>
-          <div>
             <h3>Cast:</h3>
             <StyledActorContainer>
-              {movie.actorList.map((actor) => {
-                return (
-                  <div>
-                    <h3>{actor.name}</h3>
-                    <StyledActorPics src={actor.image} />
-                  </div>
-                );
-              })}
+              <DynamicSwiper array={actorsInfo} />
             </StyledActorContainer>
           </div>
         </div>
@@ -117,14 +149,34 @@ const MovieDetails = () => {
 export default MovieDetails;
 
 const Wrapper = styled.div`
-  border: 3px solid green;
+  font-size: 20px;
+  /* border: 3px solid green; */
   display: flex;
   margin: auto;
   text-align: center;
+  justify-content: center;
+`;
+const StyledSpan = styled.span`
+  font-weight: 500;
+  color: orange;
+`;
+const StyledInfo = styled.div`
+  /* border: 3px solid green; */
+  display: block;
+  margin: 5px;
+`;
+const StyledPlot = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* border: 3px solid purple; */
+  width: 50vh;
+  /* height: 9vh; */
+  font-size: 20px;
+  /* padding-bottom: 10px; */
 `;
 const StyledBtn = styled.div`
   display: flex;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   justify-content: center;
   justify-content: space-evenly;
   padding-top: 8px;
@@ -132,6 +184,22 @@ const StyledBtn = styled.div`
 const StyledMovieTitle = styled.div`
   display: flex;
   justify-content: center;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  /* font-family: 'Sacramento', cursive; */
+  text-align: center;
+  animation: blink 4s infinite;
+  -webkit-animation: blink 6s infinite;
+  text-decoration: underline;
+`;
+const StyledCard = styled.div`
+  display: flex;
+  /* justify-content: space-between; */
+  /* border: 3px solid black; */
+  border-radius: 5px;
+  background-color: rgb(40, 40, 40);
+  color: grey;
 `;
 
 const StyledActorContainer = styled.div`
@@ -144,27 +212,37 @@ const StyledActorPics = styled.img`
 const StyledPoster = styled.img`
   /* width: 175px; */
   height: 45rem;
-  gap: 10px;
+  /* gap: 10px; */
   border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: 0px 0px 32px 2px rgba(255, 166, 0, 0.9);
+  margin-bottom: 15px;
 `;
 const StyledButton = styled.button`
   background-color: ${(props) => (props.toggled ? 'yellow' : 'red')};
 `;
 const StyledRating = styled.span`
-  font-size: 80px;
+  font-size: 40px;
   color: #fff;
+
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  font-family: 'Sacramento', cursive;
   text-align: center;
-  -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
-  animation: glow 1s ease-in-out infinite alternate;
-  @-webkit-keyframes glow {
-    from {
-      text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073,
-        0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
-    }
-    to {
-      text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6,
-        0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
-    }
-  }
+  animation: blink 4s infinite;
+  -webkit-animation: blink 6s infinite;
+`;
+const StyledFinish = styled.div`
+  /* border: 4px solid yellow; */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-left: 15px;
+  /* border: 3px solid black; */
+  border-radius: 5px;
+  /* background-color: white; */
 `;

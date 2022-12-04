@@ -21,21 +21,15 @@ const Profile = () => {
 
 export default Profile;
 const StyledDiv = styled.div`
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* font-size: 20px; */
   width: 80px;
   margin-top: 15px;
 `;
 const StyledPic = styled.img`
   border-radius: 50%;
-  border-color: ;
-
   width: 45px;
-  /* display: flex; */
-  /* border: 2px solid blue; */
   margin: auto;
-  margin-left: 8px;
+  margin-left: 5px;
+  border: 2px solid #ffa500;
 `;
 const StyledH2 = styled.h2`
   font-size: 15px;

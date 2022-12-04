@@ -28,10 +28,11 @@ const Homepage = () => {
       setMostPopularTvShows
     );
     fetchHandler(
-      'https://api.rawg.io/api/games?key=97930b3abde2449eb88423f0580c7725',
+      'https://api.rawg.io/api/games?key=97930b3abde2449eb88423f0580c7725&dates=2022-10-10,2022-12-12&ordering=-added=-released&page_size=10',
       setGames
     );
   }, []);
+  console.log(games);
   return (
     <StyledContainer>
       <h2>In Theaters</h2>
@@ -88,7 +89,7 @@ const Homepage = () => {
               image: gm.background_image,
             };
             return (
-              <div>
+              <StyledGamesRow>
                 <NavLink to={`/games/${gm.id}`}>
                   <StyledPosterGames src={gm.background_image} />
                 </NavLink>
@@ -100,7 +101,7 @@ const Homepage = () => {
                 <WatchButton media={mediaObj} />
 
                 {/* </div> */}
-              </div>
+              </StyledGamesRow>
             );
           })}
       </StyledFeatured>
@@ -115,8 +116,10 @@ const StyledContainer = styled.div`
   min-width: 100vw;
   text-align: center;
 `;
+
+const StyledGamesRow = styled.div``;
 const StyledPoster = styled.img`
-  width: 225px;
+  width: 200px;
   height: 300px;
   gap: 10px;
   border-radius: 5px;
@@ -126,12 +129,12 @@ const StyledPoster = styled.img`
 const StyledFeatured = styled.div`
   display: grid;
 
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 6fr));
 `;
 
 const StyledPosterGames = styled.img`
-  width: 350px;
-  height: 250px;
+  width: 250px;
+  height: 27px;
   gap: 10px;
   border-radius: 8px;
 `;

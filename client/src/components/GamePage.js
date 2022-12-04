@@ -34,7 +34,7 @@ const GamePage = () => {
   console.log(newGames);
   return (
     <StyledGamePage>
-      <GameSearchBar />
+      {/* <GameSearchBar /> */}
       <StyledFeatured>
         <h2>Random Games</h2>
         {allGames &&

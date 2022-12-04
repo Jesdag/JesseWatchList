@@ -17,7 +17,10 @@ import Top250Tv from './components/Top250Tv';
 import GamePage from './components/GamePage';
 import SearchBar from './components/SearchBar';
 import MyWatchList from './components/MyWatchlist';
+// import 'swiper/css/bundle';
+
 // import NewSearchBar from './components/NewSearchBar';
+
 const App = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const {
@@ -58,8 +61,8 @@ const App = () => {
       <Wapper>
         <SearchBar />
         <StyledColor>
+          <SideBar />
           <StyledDiv>
-            <SideBar />
             <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/movies' element={<MoviePage />} />
@@ -86,7 +89,7 @@ const Wapper = styled.div`
   /* flex-wrap: wrap; */
 `;
 const StyledDiv = styled.div`
-  display: flex;
+  display: block;
   min-height: 100vh;
   min-width: 100vw;
 `;

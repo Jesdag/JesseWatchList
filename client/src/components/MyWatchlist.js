@@ -29,9 +29,8 @@ const MyWatchList = () => {
   return (
     <Wrapper>
       <h1>My WathList</h1>
-
+      <h2>Completed</h2>
       <StyledFeatured>
-        <h2>Completed</h2>
         {myCompleted &&
           myCompleted.map((done) => {
             console.log(done);
@@ -89,14 +88,18 @@ const MyWatchList = () => {
   );
 };
 export default MyWatchList;
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  text-align: center;
+  border: 3px solid blue;
+  margin: auto;
+`;
 const StyledFeatured = styled.div`
   display: grid;
-
-  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  text-align: center;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 `;
 const StyledPoster = styled.img`
-  width: 225px;
+  width: 200px;
   height: 300px;
   gap: 10px;
   border-radius: 5px;

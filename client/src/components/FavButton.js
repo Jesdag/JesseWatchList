@@ -39,6 +39,6 @@ const FavButton = ({ media }) => {
   );
 };
 const StyledButton = styled.button`
-  background-color: ${(props) => (props.toggled ? 'yellow' : 'red')};
+  background-color: ${(props) => (props.toggled ? 'red' : 'Green')};
 `;
 export default FavButton;

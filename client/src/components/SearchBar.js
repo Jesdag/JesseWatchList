@@ -3,27 +3,48 @@ import styled from 'styled-components';
 import useDebounce from './../hooks/useDebounce';
 import { BiSearch } from 'react-icons/bi';
 import Profile from '../auth0/Profile';
-import { NavLink } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const SearchBar = () => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
-  const debounceQuery = useDebounce(query, 500);
-  console.log(debounceQuery.length);
+  const debounceQuery = useDebounce(query, 2000);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  console.log(pathname);
 
   useEffect(() => {
-    if (debounceQuery.length !== 0)
-      fetch(
-        `https://imdb-api.com/en/API/SearchMovie/k_44cr6yag/${debounceQuery}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (!data.errors) {
-            setResults(data.results);
-          } else {
-            setResults([]);
-          }
-        });
+    if (debounceQuery.length !== 0) {
+      if (pathname.includes(`/games`)) {
+        fetch(
+          `https://api.rawg.io/api/games?key=97930b3abde2449eb88423f0580c7725&search=${debounceQuery}&page_size=10`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (!data.errors) {
+              const mapData = data.results.map((result) => {
+                return { id: result.id, title: result.name };
+              });
+              setResults(mapData);
+            } else {
+              setResults([]);
+            }
+          });
+      } else {
+        fetch(
+          `https://imdb-api.com/en/API/SearchMovie/${process.env.REACT_APP_IMDB}/${debounceQuery}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (!data.errors) {
+              setResults(data.results);
+            } else {
+              setResults([]);
+            }
+          });
+      }
+    }
   }, [debounceQuery]);
 
   const onChange = (ev) => {
@@ -38,23 +59,32 @@ const SearchBar = () => {
       <StyledWatchList>Watch-List</StyledWatchList>
 
       <Form>
-        <StyledInput
-          type='text'
-          value={query}
-          onChange={onChange}
-          placeholder='Type to Search...'
-        />
-        <BiSearch className='mag' />
+        <div className='SearchContainer'>
+          <StyledInput
+            type='text'
+            value={query}
+            onChange={onChange}
+            placeholder='Type to Search...'
+          />
+          <BiSearch className='mag' />
+        </div>
         {query.length > 0 && (
           <StyledUl>
-            <StyledList>
+            <StyledList show={results.length > 0}>
               {results &&
                 results.map((movie) => {
                   return (
                     <LinkStyle>
-                      <NavLink to={`/movies/${movie.id}`}>
+                      <button
+                        onClick={() => {
+                          setQuery('');
+                          pathname.includes(`/games`)
+                            ? navigate(`/games/${movie.id}`)
+                            : navigate(`/movies/${movie.id}`);
+                        }}
+                      >
                         <li>{movie.title}</li>
-                      </NavLink>
+                      </button>
                     </LinkStyle>
                   );
                 })}
@@ -76,21 +106,30 @@ const LinkStyle = styled.div`
 const StyledList = styled.div`
   background: white;
   text-align: center;
-  margin-right: 28px;
+  /* margin-right: 28px; */
   border-radius: 5px;
-  padding: 20px;
+  padding: ${(props) => (props.show ? '40px 20px 20px' : '0px')};
 `;
 const StyledUl = styled.ul`
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
 const StyledProfile = styled.div`
   display: flex;
   text-align: center;
   /* margin: 5px; */
   width: 100px;
-  border: 2px solid pink;
+  /* border: 2px solid pink; */
 `;
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   padding: 0;
@@ -157,7 +196,9 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.div`
-  position: sticky;
+  /* display: flex;
+  flex-direction: column; */
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -170,8 +211,13 @@ const Form = styled.div`
   border: 4px solid white;
   padding: 5px;
   /* margin-top: 50px; */
+  .SearchContainer {
+    z-index: 2;
+    /* position: relative; */
+  }
   .mag {
     box-sizing: border-box;
+
     padding: 10px;
     width: 42.5px;
     height: 42.5px;
@@ -184,10 +230,54 @@ const Form = styled.div`
     font-size: 1.2em;
     transition: all 1s;
   }
-
+  ul {
+    opacity: 0;
+    /* display: none; */
+    z-index: -1;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+    /* width: 50px; */
+    padding: 0;
+  }
   &:hover {
     width: 300px;
     cursor: pointer;
+
+    ul {
+      -webkit-animation: 1s ease 0s normal forwards 1 fadein;
+      animation: 1s ease 0s normal forwards 1 fadein;
+      display: block;
+      /* width: 300px; */
+    }
+    @keyframes fadein {
+      0% {
+        width: 50px;
+
+        opacity: 0;
+      }
+      19% {
+        opacity: 0;
+      }
+      100% {
+        width: 300px;
+
+        opacity: 1;
+      }
+    }
+
+    @-webkit-keyframes fadein {
+      0% {
+        opacity: 0;
+      }
+      19% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
   }
 
   &:hover input {
