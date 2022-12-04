@@ -11,7 +11,9 @@ const FavButton = ({ media }) => {
   } = useContext(UserContext);
   const { id, image, title, rating } = media;
 
-  const handleComplete = async () => {
+  const handleComplete = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     try {
       const result = await fetch('/api/complete', {
         method: 'PATCH',

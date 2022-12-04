@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import FavButton from './FavButton';
 import WatchButton from './WatchButton';
+import { UserContext } from './../context/UserContext';
 const MyWatchList = () => {
   const [myFavs, setMyFavs] = useState(null);
   const [myEnt, setMyEnt] = useState(null);
   const [myCompleted, setMyCompleted] = useState(null);
-
+  const { favIds, entertainmentIds, completeIds } = useContext(UserContext);
   useEffect(() => {
     fetch('/api/UsersList')
       .then((res) => res.json())
@@ -24,7 +25,7 @@ const MyWatchList = () => {
       .catch((error) => {
         console.log('error');
       });
-  }, []);
+  }, [favIds, entertainmentIds, completeIds]);
 
   return (
     <Wrapper>

@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useContext } from 'react';
+
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { NavLink } from 'react-router-dom';
@@ -9,7 +10,13 @@ import 'swiper/css/navigation';
 // import required modules
 import { Pagination, Navigation } from 'swiper';
 import styled from 'styled-components';
-const GameSwiper = ({ allGames }) => {
+import FavButton from '../components/FavButton';
+import WatchButton from '../components/WatchButton';
+import { UserContext } from './../context/UserContext';
+
+const MovieSwiper = ({ allGames }) => {
+  const { userData } = useContext(UserContext);
+
   console.log(allGames);
   return (
     <StyledGameSwiper>
@@ -32,6 +39,12 @@ const GameSwiper = ({ allGames }) => {
                 <div>
                   <img className='swiper-image' src={item.image} />
                   <h1>{item.title}</h1>
+                  {userData && (
+                    <>
+                      <FavButton media={item} />
+                      <WatchButton media={item} />
+                    </>
+                  )}
                 </div>
               </NavLink>
             </SwiperSlide>
@@ -41,7 +54,7 @@ const GameSwiper = ({ allGames }) => {
     </StyledGameSwiper>
   );
 };
-export default GameSwiper;
+export default MovieSwiper;
 const StyledGameSwiper = styled.div`
   height: 100%;
   width: var(--full-width);

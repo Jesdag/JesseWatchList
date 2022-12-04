@@ -70,7 +70,7 @@ const SearchBar = () => {
         </div>
         {query.length > 0 && (
           <StyledUl>
-            <StyledList show={results.length > 0}>
+            <StyledList show={results && results.length > 0}>
               {results &&
                 results.map((movie) => {
                   return (
@@ -134,6 +134,7 @@ const Wrapper = styled.div`
   align-items: center;
   position: sticky;
   top: 0;
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   padding: 0;

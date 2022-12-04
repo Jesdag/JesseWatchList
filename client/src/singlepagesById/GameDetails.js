@@ -7,6 +7,7 @@ import styled from 'styled-components';
 const GameDetails = () => {
   const [games, setGames] = useState(null);
   const [gameTrailers, setGameTrailers] = useState(null);
+  const [mediaObj, setMediaObj] = useState(null);
 
   const { id } = useParams();
   console.log(id);
@@ -14,6 +15,15 @@ const GameDetails = () => {
     const res = await fetch(string);
     const json = await res.json();
     callback(json);
+    const { id, name, rating } = json;
+    // console.log(typeof id);
+    const obj = {
+      id: id,
+      title: name,
+      rating,
+      image: json.background_image,
+    };
+    setMediaObj(obj);
   };
   useEffect(() => {
     fetchHandler(
@@ -25,7 +35,7 @@ const GameDetails = () => {
   return (
     <>
       {/* <GameSearchBar /> */}
-      {!games ? (
+      {!games && !mediaObj ? (
         <div>
           <img
             src={
@@ -68,8 +78,8 @@ const GameDetails = () => {
             </StyledDevs>
           )}
           <StyledBtn>
-            <FavButton media={games} />
-            <WatchButton media={games} />
+            <FavButton media={mediaObj} />
+            <WatchButton media={mediaObj} />
           </StyledBtn>
           <div>
             <StyledDescription>{games.description_raw}</StyledDescription>

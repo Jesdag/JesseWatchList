@@ -6,7 +6,10 @@ const FavButton = ({ media }) => {
   const { userData, setFavIds, favIds } = useContext(UserContext);
   const { id, image, title, rating } = media;
 
-  const handleFavorites = async () => {
+  const handleFavorites = async (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     try {
       const result = await fetch('/api/favorites', {
         method: 'PATCH',

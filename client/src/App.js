@@ -99,5 +99,6 @@ const StyledDiv = styled.div`
 `;
 const StyledColor = styled.div`
   background-color: rgb(64, 64, 64);
+  width: 100vw;
 `;
 export default App;
