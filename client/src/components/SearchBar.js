@@ -123,19 +123,23 @@ const StyledUl = styled.ul`
 `;
 const StyledProfile = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   /* margin: 5px; */
   width: 100px;
-  /* border: 2px solid pink; */
+  border: 2px solid pink;
 `;
 const Wrapper = styled.div`
-  position: relative;
+  align-items: center;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   padding: 0;
   margin: 0;
-  height: 10vh;
-  width: 100%;
+  height: 150px;
+  width: var(--full-width);
   background: rgb(40, 40, 40);
   background-image: repeating-linear-gradient(
     to bottom,

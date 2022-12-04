@@ -59,10 +59,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <Wapper>
-        <SearchBar />
         <StyledColor>
           <SideBar />
           <StyledDiv>
+            <SearchBar />
+
             <Routes>
               <Route path='/' element={<HomePage />} />
               <Route path='/movies' element={<MoviePage />} />
@@ -89,9 +90,12 @@ const Wapper = styled.div`
   /* flex-wrap: wrap; */
 `;
 const StyledDiv = styled.div`
+  position: relative;
+  margin-left: var(--sidebar-width);
   display: block;
   min-height: 100vh;
-  min-width: 100vw;
+  min-width: var(--full-width);
+  /* border: 3px solid yellow; */
 `;
 const StyledColor = styled.div`
   background-color: rgb(64, 64, 64);

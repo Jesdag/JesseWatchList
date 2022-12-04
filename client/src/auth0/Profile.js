@@ -22,14 +22,14 @@ const Profile = () => {
 export default Profile;
 const StyledDiv = styled.div`
   width: 80px;
-  margin-top: 15px;
+  /* margin-top: 15px; */
 `;
 const StyledPic = styled.img`
   border-radius: 50%;
   width: 45px;
   margin: auto;
   margin-left: 5px;
-  border: 2px solid #ffa500;
+  /* border: 2px solid #ffa500; */
 `;
 const StyledH2 = styled.h2`
   font-size: 15px;

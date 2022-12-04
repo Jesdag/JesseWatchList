@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import FavButton from './FavButton';
 import WatchButton from './WatchButton';
 import { UserContext } from './../context/UserContext';
+import GameSwiper from '../swiper/GameSwiper';
 
 const Homepage = () => {
   const [inTheaters, setInTheaters] = useState(null);
@@ -20,7 +21,7 @@ const Homepage = () => {
   };
   useEffect(() => {
     fetchHandler(
-      'https://imdb-api.com/en/API/InTheaters/k_44cr6yag',
+      `https://imdb-api.com/en/API/InTheaters/${process.env.REACT_APP_IMDB}?count=10`,
       setInTheaters
     );
     fetchHandler(
@@ -37,8 +38,9 @@ const Homepage = () => {
     <StyledContainer>
       <h2>In Theaters</h2>
       <StyledFeatured>
-        {inTheaters &&
-          inTheaters.items.map((movie) => {
+        {inTheaters && <GameSwiper allGames={inTheaters.items.slice(0, 10)} />}
+        {/* {inTheaters &&
+          inTheaters.items.slice(0, 10).map((movie) => {
             // console.log(movie);
             return (
               <div>
@@ -55,7 +57,7 @@ const Homepage = () => {
                 )}
               </div>
             );
-          })}
+          })} */}
       </StyledFeatured>
       <h2>Trending Shows</h2>
       <StyledFeatured>
@@ -112,8 +114,9 @@ const Homepage = () => {
 export default Homepage;
 
 const StyledContainer = styled.div`
-  min-height: 100vh;
-  min-width: 100vw;
+  /* min-height: 100vh; */
+  height: 200vh;
+  min-width: var(--full-width);
   text-align: center;
 `;
 
@@ -128,8 +131,9 @@ const StyledPoster = styled.img`
 
 const StyledFeatured = styled.div`
   display: grid;
-
+  width: var(--full-width);
   grid-template-columns: repeat(auto-fill, minmax(15rem, 6fr));
+  /* border: 3px solid green; */
 `;
 
 const StyledPosterGames = styled.img`

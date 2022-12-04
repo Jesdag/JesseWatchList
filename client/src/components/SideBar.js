@@ -10,79 +10,91 @@ import { CiBeerMugFull } from 'react-icons/ci';
 
 const SideBar = () => {
   return (
-    <SideBarFix>
-      <StyledIcons>
-        <nav class='main-menu'>
-          <StyledUl>
-            <li>
-              <NavLink to={'/'}>
-                <AiOutlineHome className='fa fa-laptop fa-2x' />
-                <span class='nav-text'>Home</span>
-              </NavLink>
-            </li>
-            <li class='has-subnav'>
-              <NavLink to={'/myWatchList'}>
-                <CiBeerMugFull className='fa fa-laptop fa-2x' />
-                <span class='nav-text'>Watch List</span>
-              </NavLink>
-            </li>
-            <li class='has-subnav'>
-              <NavLink to={'/top250Movies'}>
-                <BiListUl className='fa fa-laptop fa-2x' />
-                <span class='nav-text'> Top 250 Movies</span>
-              </NavLink>
-            </li>
-            <li class='has-subnav'>
-              <NavLink to={'/movies'}>
-                <CgScreen className='fa fa-folder-open fa-2x' />
-                <span class='nav-text'>Movies</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={'/top250Tv'}>
-                <BiListUl className='fa fa-laptop fa-2x' />
-                <span class='nav-text'>Top 250 TvShows</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={'/tv'}>
-                <CgScreen className='fa fa-folder-open fa-2x' />
-                <span class='nav-text'>Tv Shows</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={'/games'}>
-                <FaGamepad className='fa fa-table fa-2x' />
-                <span class='nav-text'>Games</span>
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={'/dev'}>
-                <SiAngellist className='fa fa-power-off fa-2x' />
-                <span class='nav-text'>Jesse's Top Pick</span>
-              </NavLink>
-            </li>
-          </StyledUl>
+    <StyledSideBar>
+      <SideBarFix>
+        <StyledIcons>
+          <nav class='main-menu'>
+            <StyledUl>
+              <li>
+                <NavLink to={'/'}>
+                  <AiOutlineHome className='fa fa-laptop fa-2x' />
+                  <span class='nav-text'>Home</span>
+                </NavLink>
+              </li>
+              <li class='has-subnav'>
+                <NavLink to={'/myWatchList'}>
+                  <CiBeerMugFull className='fa fa-laptop fa-2x' />
+                  <span class='nav-text'>Watch List</span>
+                </NavLink>
+              </li>
+              <li class='has-subnav'>
+                <NavLink to={'/top250Movies'}>
+                  <BiListUl className='fa fa-laptop fa-2x' />
+                  <span class='nav-text'> Top 250 Movies</span>
+                </NavLink>
+              </li>
+              <li class='has-subnav'>
+                <NavLink to={'/movies'}>
+                  <CgScreen className='fa fa-folder-open fa-2x' />
+                  <span class='nav-text'>Movies</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={'/top250Tv'}>
+                  <BiListUl className='fa fa-laptop fa-2x' />
+                  <span class='nav-text'>Top 250 TvShows</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={'/tv'}>
+                  <CgScreen className='fa fa-folder-open fa-2x' />
+                  <span class='nav-text'>Tv Shows</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={'/games'}>
+                  <FaGamepad className='fa fa-table fa-2x' />
+                  <span class='nav-text'>Games</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to={'/dev'}>
+                  <SiAngellist className='fa fa-power-off fa-2x' />
+                  <span class='nav-text'>Jesse's Top Pick</span>
+                </NavLink>
+              </li>
+            </StyledUl>
 
-          <ul class='logout'>
-            <li>
-              <BiPowerOff className='fa fa-power-off fa-2x' />
-              <span class='nav-text'>
-                <LoginButton />
-              </span>
-            </li>
-          </ul>
-        </nav>
-      </StyledIcons>
-    </SideBarFix>
+            <ul class='logout'>
+              <li>
+                <BiPowerOff className='fa fa-power-off fa-2x' />
+                <span class='nav-text'>
+                  <LoginButton />
+                </span>
+              </li>
+            </ul>
+          </nav>
+        </StyledIcons>
+      </SideBarFix>
+    </StyledSideBar>
   );
 };
 
 export default SideBar;
+const StyledSideBar = styled.div`
+  /* position: fixed; */
+  /* top: 0; */
+  height: 100%;
+  border: 3px solid purple;
+`;
 const StyledNav = styled.nav``;
 const StyledUl = styled.ul`
   display: flex;
   flex-direction: column;
+  border: 3px solid purple;
+  height: 100%;
+  position: fixed;
+  top: 0;
 `;
 const StyledIcons = styled.div`
   display: flex;
@@ -112,12 +124,12 @@ const SideBarFix = styled.div`
   .main-menu {
     background: #212121;
     border-right: 1px solid #e5e5e5;
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     height: 100%;
     left: 0;
-    width: 60px;
+    width: var(--sidebar-width);
     overflow: hidden;
     -webkit-transition: width 0.05s linear;
     transition: width 0.05s linear;
