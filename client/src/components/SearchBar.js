@@ -76,6 +76,7 @@ const SearchBar = () => {
                   return (
                     <LinkStyle>
                       <button
+                        className='searchBtn'
                         onClick={() => {
                           setQuery('');
                           pathname.includes(`/games`)
@@ -105,10 +106,14 @@ const LinkStyle = styled.div`
 `;
 const StyledList = styled.div`
   background: white;
-  text-align: center;
+  /* text-align: center; */
   /* margin-right: 28px; */
   border-radius: 5px;
   padding: ${(props) => (props.show ? '40px 20px 20px' : '0px')};
+  .searchBtn {
+    border: none;
+    /* width: 30px; */
+  }
 `;
 const StyledUl = styled.ul`
   position: absolute;
@@ -120,6 +125,7 @@ const StyledUl = styled.ul`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  padding: auto;
 `;
 const StyledProfile = styled.div`
   display: flex;
@@ -128,7 +134,7 @@ const StyledProfile = styled.div`
   text-align: center;
   /* margin: 5px; */
   width: 100px;
-  border: 2px solid pink;
+  margin-right: 10px;
 `;
 const Wrapper = styled.div`
   align-items: center;
@@ -142,62 +148,19 @@ const Wrapper = styled.div`
   height: 150px;
   width: var(--full-width);
   background: rgb(40, 40, 40);
-  background-image: repeating-linear-gradient(
+  /* background-image: repeating-linear-gradient(
     to bottom,
     transparent 7px,
     rgba(0, 0, 0, 0.8) 9px,
     rgba(0, 0, 0, 0.8) 13px,
     transparent 13px
-  );
-  @-webkit-keyframes blink {
-    20%,
-    24%,
-    55% {
-      color: #111;
-      text-shadow: none;
-    }
-
-    0%,
-    19%,
-    21%,
-    23%,
-    25%,
-    54%,
-    56%,
-    100% {
-      /*     color: #fccaff;
-    text-shadow: 0 0 5px #f562ff, 0 0 15px #f562ff, 0 0 25px #f562ff,
-      0 0 20px #f562ff, 0 0 30px #890092, 0 0 80px #890092, 0 0 80px #890092; */
-      text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
-        0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
-      color: #fff6a9;
-    }
-  }
-
-  @keyframes blink {
-    20%,
-    24%,
-    55% {
-      color: #111;
-      text-shadow: none;
-    }
-
-    0%,
-    19%,
-    21%,
-    23%,
-    25%,
-    54%,
-    56%,
-    100% {
-      /*     color: #fccaff;
-    text-shadow: 0 0 5px #f562ff, 0 0 15px #f562ff, 0 0 25px #f562ff,
-      0 0 20px #f562ff, 0 0 30px #890092, 0 0 80px #890092, 0 0 80px #890092; */
-      text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
-        0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
-      color: #fff6a9;
-    }
-  }
+  ); */
+  background-image: url('https://w0.peakpx.com/wallpaper/406/573/HD-wallpaper-metal-dotted-texture-metal-grid-pattern-macro-metal-textures-metal-grid-metal-backgrounds-metal-grid-background-grid-patterns-black-backgrounds.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-bottom: 4px solid grey;
+  margin-bottom: 20px;
 `;
 
 const Form = styled.div`

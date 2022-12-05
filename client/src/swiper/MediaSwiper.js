@@ -18,7 +18,7 @@ const MediaSwiper = ({ allGames }) => {
   return (
     <StyledGameSwiper>
       <Swiper
-        slidesPerView={4}
+        slidesPerView={5}
         spaceBetween={30}
         loop={true}
         pagination={{
@@ -32,7 +32,7 @@ const MediaSwiper = ({ allGames }) => {
           console.log(typeof item.image);
           return (
             <SwiperSlide>
-              <NavLink to={`/games/${item.id}`}>
+              <NavLink className='nav' to={`/games/${item.id}`}>
                 <div>
                   <img className='swiper-image' src={item.image} />
                   <h1>{item.title}</h1>
@@ -56,7 +56,15 @@ const StyledGameSwiper = styled.div`
   height: 100%;
   width: var(--full-width);
   min-height: 700px;
-  border: 5px solid blue;
+  border: 4px solid rgb(40, 40, 40);
+  color: orange;
+  text-decoration: none;
+
+  .nav {
+    text-decoration: none;
+    color: rgb(40, 40, 40);
+    text-decoration: none;
+  }
   .swiper {
     width: 100%;
     height: 100%;
@@ -66,8 +74,11 @@ const StyledGameSwiper = styled.div`
 
   .swiper-slide {
     text-align: center;
-    font-size: 18px;
-    background: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    color: orange;
+    text-decoration: none;
+    /* background: #fff; */
 
     /* Center slide text vertically */
     display: -webkit-box;
@@ -86,8 +97,18 @@ const StyledGameSwiper = styled.div`
 
   .swiper-slide img {
     display: block;
-    width: 100%;
-    height: 100%;
+    width: 500px;
+    height: 325px;
+    /* width: 100%; */
+    /* height: 100%; */
     object-fit: cover;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 3px solid orange;
+    &:hover {
+      border: 4px solid #2eff3c;
+      box-shadow: 0px 0px 31px 11px rgba(46, 255, 60, 0.56);
+    }
   }
 `;

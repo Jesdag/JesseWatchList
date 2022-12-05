@@ -85,13 +85,14 @@ const StyledSideBar = styled.div`
   /* position: fixed; */
   /* top: 0; */
   height: 100%;
-  border: 3px solid purple;
+  /* border: 3px solid purple; */
 `;
 const StyledNav = styled.nav``;
 const StyledUl = styled.ul`
   display: flex;
   flex-direction: column;
-  border: 3px solid purple;
+  /* border: 3px solid purple; */
+  justify-content: space-evenly;
   height: 100%;
   position: fixed;
   top: 0;

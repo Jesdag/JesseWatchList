@@ -12,6 +12,8 @@ const MovieDetails = () => {
   const [movie, setMovie] = useState(null);
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [actorsInfo, setActorsInfo] = useState(null);
+  const [actorsPic, setActorsPics] = useState(null);
+
   const { userData, setFavIds, favIds } = useContext(UserContext);
   const { id } = useParams();
   // console.log(userData);
@@ -135,12 +137,13 @@ const MovieDetails = () => {
             </div>
           </div>
 
-          <div>
+          {/* <div>
             <h3>Cast:</h3>
             <StyledActorContainer>
-              <DynamicSwiper array={actorsInfo} />
+              {actorsPic.}
+              <DynamicSwiper array={movie.actors} />
             </StyledActorContainer>
-          </div>
+          </div> */}
         </div>
       )}
     </Wrapper>
@@ -191,7 +194,7 @@ const StyledMovieTitle = styled.div`
   text-align: center;
   animation: blink 4s infinite;
   -webkit-animation: blink 6s infinite;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 `;
 const StyledCard = styled.div`
   display: flex;
@@ -214,10 +217,8 @@ const StyledPoster = styled.img`
   height: 45rem;
   /* gap: 10px; */
   border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
-    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
-    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   box-shadow: 0px 0px 32px 2px rgba(255, 166, 0, 0.9);
+
   margin-bottom: 15px;
 `;
 const StyledButton = styled.button`
@@ -230,7 +231,6 @@ const StyledRating = styled.span`
   text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
     0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
   color: #fff6a9;
-  font-family: 'Sacramento', cursive;
   text-align: center;
   animation: blink 4s infinite;
   -webkit-animation: blink 6s infinite;

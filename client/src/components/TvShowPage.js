@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import FavButton from './FavButton';
 import WatchButton from './WatchButton';
+import MovieSwiper from '../swiper/MovieSwiper';
 const TvShowPage = () => {
   const [topShows, setTopShows] = useState(null);
   const [cartoons, setCartoons] = useState(null);
@@ -16,18 +17,18 @@ const TvShowPage = () => {
   };
   useEffect(() => {
     fetchHandler(
-      'https://imdb-api.com/en/API/MostPopularTVs/k_44cr6yag',
+      `https://imdb-api.com/en/API/MostPopularTVs/${process.env.REACT_APP_IMDB}`,
       setTopShows
     );
     fetchHandler(
-      'https://imdb-api.com/API/AdvancedSearch/k_44cr6yag?title_type=tv_series&genres=animation',
+      `https://imdb-api.com/API/AdvancedSearch/${process.env.REACT_APP_IMDB}?title_type=tv_series&genres=animation`,
       setCartoons
     );
     fetchHandler(
-      'https://imdb-api.com/API/AdvancedSearch/k_44cr6yag?title_type=tv_series&genres=documentary&groups=emmy_winners,emmy_nominees',
+      `https://imdb-api.com/API/AdvancedSearch/${process.env.REACT_APP_IMDB}?title_type=tv_series&genres=documentary`,
       setEmmy
     );
-    console.log(cartoons);
+    // console.log(cartoons);
   }, []);
 
   ////////////////////////////////////
@@ -35,64 +36,25 @@ const TvShowPage = () => {
   ////////////////////////////////////
   return (
     <Wrapper>
-      <h2>Most Popular Shows</h2>
+      <h1>Most Popular Shows</h1>
       {topShows && (
-        <StyledTvShowPage>
-          {topShows.items.map((shows) => {
-            // console.log(shows);
-            return (
-              <NavLink to={`/tv/${shows.id}`}>
-                <div>
-                  <StyledPoster src={shows.image} />
-                  <div>{shows.rating}</div>
-                  <div>{shows.fullTitle}</div>
-                  <div>{shows.imDbRating}</div>
-                  <FavButton media={shows} />
-                  <WatchButton media={shows} />
-                </div>
-              </NavLink>
-            );
-          })}
-        </StyledTvShowPage>
+        <StyledFeatured>
+          {topShows && <MovieSwiper allGames={topShows.items.slice(0, 10)} />}
+        </StyledFeatured>
       )}
-      <h2>Animation</h2>
-      <StyledFeatured>
-        {cartoons &&
-          cartoons.results.map((show) => {
-            // console.log(show);
-            return (
-              <NavLink to={`/tv/${show.id}`}>
-                <div>
-                  <StyledPoster src={show.image} />
-                  <div>{show.rank}</div>
-                  <div>{show.title}</div>
-                  <div>{show.imDbRating}</div>
-                  <FavButton media={show} />
-                  <WatchButton media={show} />
-                </div>
-              </NavLink>
-            );
-          })}
-      </StyledFeatured>
-      <h2>Documentary</h2>
-      <StyledFeatured>
-        {emmy &&
-          emmy.results.map((show) => {
-            // console.log(show);
-            return (
-              <NavLink to={`/tv/${show.id}`}>
-                <div>
-                  <StyledPoster src={show.image} />
-                  <div>{show.rank}</div>
-                  <div>{show.title}</div>
-                  <div>{show.imDbRating}</div>
-                  <FavButton media={show} />
-                  <WatchButton media={show} />
-                </div>
-              </NavLink>
-            );
-          })}
-      </StyledFeatured>
+      <h1>Animation</h1>
+      {cartoons && (
+        <StyledFeatured>
+          {cartoons && <MovieSwiper allGames={cartoons.results.slice(0, 10)} />}
+        </StyledFeatured>
+      )}
+      <h1>Documentary</h1>
+      {emmy && (
+        <StyledFeatured>
+          {emmy && <MovieSwiper allGames={emmy.results.slice(0, 10)} />}
+          console.log(emmy)
+        </StyledFeatured>
+      )}
     </Wrapper>
   );
 };
@@ -104,6 +66,18 @@ const Wrapper = styled.div`
   min-width: 100vw;
   gap: 10px;
   text-align: center;
+  min-width: var(--full-width);
+  text-align: center;
+  font-size: large;
+  text-align: center;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  /* font-family: 'Sacramento', cursive; */
+  text-align: center;
+  animation: blink 12s infinite;
+  -webkit-animation: blink 6s infinite;
+  /* text-decoration: underline; */
 `;
 const StyledTvShowPage = styled.div`
   display: flex;

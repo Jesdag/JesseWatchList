@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import FavButton from './FavButton';
 import WatchButton from './WatchButton';
+import MovieSwiper from '../swiper/MovieSwiper';
 const MoviePage = () => {
   const [mComingSoon, setMComingSoon] = useState(null);
   const [topBoxOffice, setBoxOffice] = useState(null);
   const [mostPopMovies, setMostPopMovies] = useState(null);
 
-  ///////Fetch to Api for Movies
+  ///////Fetch to Api for
 
   const fetchHandler = async (string, callback) => {
     const res = await fetch(string);
@@ -17,72 +18,40 @@ const MoviePage = () => {
   };
   useEffect(() => {
     fetchHandler(
-      'https://imdb-api.com/en/API/ComingSoon/k_44cr6yag',
+      `https://imdb-api.com/en/API/ComingSoon/${process.env.REACT_APP_IMDB}`,
       setMComingSoon
     );
     fetchHandler(
-      'https://imdb-api.com/en/API/MostPopularMovies/k_44cr6yag',
+      `https://imdb-api.com/en/API/MostPopularMovies/${process.env.REACT_APP_IMDB}`,
       setMostPopMovies
     );
     fetchHandler(
-      'https://imdb-api.com/en/API/BoxOffice/k_44cr6yag',
+      `https://imdb-api.com/en/API/BoxOffice/${process.env.REACT_APP_IMDB}`,
       setBoxOffice
     );
   }, []);
 
   return (
     <WrapperMoviePage>
-      <h2>Most Popular Movies</h2>
+      <h1>Most Popular Movies</h1>
       <StyledFeatured>
-        {mostPopMovies &&
-          mostPopMovies.items.map((movieMostPop) => {
-            return (
-              <NavLink to={`/movies/${movieMostPop.id}`}>
-                <div>
-                  <StyledPoster src={movieMostPop.image} />
-                  <div>{movieMostPop.fullTitle}</div>
-                  <div>{movieMostPop.imDbRating}</div>
-                  <FavButton media={movieMostPop} />
-                  <WatchButton media={movieMostPop} />
-                </div>
-              </NavLink>
-            );
-          })}
+        {mostPopMovies && (
+          <MovieSwiper allGames={mostPopMovies.items.slice(0, 20)} />
+        )}
       </StyledFeatured>
 
-      <h2>Top BoxOffice</h2>
+      <h1>Top BoxOffice</h1>
       <StyledFeatured>
-        {topBoxOffice &&
-          topBoxOffice.items.map((topBox) => {
-            return (
-              <NavLink to={`/movies/${topBox.id}`}>
-                <div>
-                  <StyledPoster src={topBox.image} />
-                  <div>{topBox.fullTitle}</div>
-                  <div>{topBox.imDbRating}</div>
-                  <FavButton media={topBox} />
-                  <WatchButton media={topBox} />
-                </div>
-              </NavLink>
-            );
-          })}
+        {topBoxOffice && (
+          <MovieSwiper allGames={topBoxOffice.items.slice(0, 10)} />
+        )}
       </StyledFeatured>
-      <h2>Coming Soon</h2>
+
+      <h1>Coming Soon</h1>
       <StyledFeatured>
-        {mComingSoon &&
-          mComingSoon.items.map((movie) => {
-            return (
-              <>
-                <div>
-                  <StyledPoster src={movie.image} />
-                  <div>{movie.fullTitle}</div>
-                  {/* <div>{movie.imDbRating}</div> */}
-                  <FavButton media={movie} />
-                  <WatchButton media={movie} />
-                </div>
-              </>
-            );
-          })}
+        {mComingSoon && (
+          <MovieSwiper allGames={mComingSoon.items.slice(0, 10)} />
+        )}
       </StyledFeatured>
     </WrapperMoviePage>
   );
@@ -90,13 +59,22 @@ const MoviePage = () => {
 export default MoviePage;
 const WrapperMoviePage = styled.div`
   min-height: 100vh;
+  min-width: var(--full-width);
+  text-align: center;
+  font-size: large;
+  text-align: center;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  /* font-family: 'Sacramento', cursive; */
+  text-align: center;
+  animation: blink 12s infinite;
+  -webkit-animation: blink 6s infinite;
+  /* text-decoration: underline; */
+
   min-width: 100vw;
 `;
-const StyledPoster = styled.img`
-  width: 215px;
-  height: 325px;
-  border-radius: 5px;
-`;
+
 const StyledFeatured = styled.div`
   display: grid;
 

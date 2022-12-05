@@ -47,24 +47,26 @@ const Homepage = () => {
       setMostPopularTvShows
     );
     fetchGamesHandler(
-      'https://api.rawg.io/api/games?key=97930b3abde2449eb88423f0580c7725&dates=2022-10-10,2022-12-12&ordering=-added=-released&page_size=10',
+      `https://api.rawg.io/api/games?key=${process.env.REACT_APP_RAWR}&dates=2022-10-10,2022-12-12&ordering=-added=-released&page_size=10`,
       setGames
     );
   }, []);
   console.log(games);
   return (
     <StyledContainer>
-      <h2>In Theaters</h2>
+      <StyledHOne>In Theaters</StyledHOne>
+
       <StyledFeatured>
-        {/* {inTheaters && <MovieSwiper allGames={inTheaters.items.slice(0, 10)} />} */}
+        {inTheaters && <MovieSwiper allGames={inTheaters.items.slice(0, 10)} />}
       </StyledFeatured>
-      <h2>Trending Shows</h2>
+
+      <StyledHOne>Trending Shows</StyledHOne>
       <StyledFeatured>
         {mostPopularTvShows && (
           <MovieSwiper allGames={mostPopularTvShows.items.slice(0, 10)} />
         )}
       </StyledFeatured>
-      <h2>Games</h2>
+      <StyledHOne>Games</StyledHOne>
       <StyledFeatured>
         {games && <MediaSwiper allGames={games.slice(0, 10)} />}
       </StyledFeatured>
@@ -75,11 +77,22 @@ const Homepage = () => {
 export default Homepage;
 
 const StyledContainer = styled.div`
-  /* min-height: 100vh; */
   height: 200vh;
+
   min-width: var(--full-width);
   text-align: center;
+  font-size: large;
+  text-align: center;
+  text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500,
+    0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+  color: #fff6a9;
+  /* font-family: 'Sacramento', cursive; */
+  text-align: center;
+  animation: blink 12s infinite;
+  -webkit-animation: blink 6s infinite;
+  /* text-decoration: underline; */
 `;
+const StyledHOne = styled.h1``;
 
 const StyledGamesRow = styled.div``;
 const StyledPoster = styled.img`
